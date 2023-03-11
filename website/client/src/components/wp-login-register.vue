@@ -15,11 +15,11 @@
               <p>Unable to login - please check your email and password.</p>
             </div>
 
-            <form>
+            <form @submit.prevent="printToConsole">
               <div class="form-group">
                 <label for="email" class="input-label">EMAIL</label>
                 <input  type="email" class="input form-control" id="email" v-model="lemail"
-                        aria-describedby="emailHelp" @keyup.enter="login">
+                        aria-describedby="emailHelp" @keyup.enter="login" ref="loginEmail">
               </div>
 
               <div class="form-group">
@@ -65,7 +65,7 @@
               <div class="form-group">
                 <label for="email" class="input-label">EMAIL</label>
                 <input  type="email" class="input form-control" id="email" v-model="remail"
-                        aria-describedby="emailHelp" @keyup.enter="register">
+                        aria-describedby="emailHelp" @keyup.enter="register" ref="registerEmail">
                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
 
@@ -157,7 +157,7 @@ export default {
     },
   },
   methods: {
-
+    
     selectRegister: function() {
       this.loginSelected = false
     },
@@ -229,6 +229,17 @@ export default {
       })
     },
   },
+
+  mounted() {
+    this.$nextTick(() => {
+      if (this.loginSelected) {
+        this.$refs.loginEmail.focus();
+      } else {
+        this.$refs.registerEmail.focus();
+      }
+    });
+  },
+
   beforeMount: function () {
     this.loginSelected = this.showRegister == null || this.showRegister === "false"
     if (this.prepopulatedEmail) {
