@@ -11,6 +11,7 @@ import { showErrorModal } from '../ui_elements/modals'
 import { SinglePlayerGame } from '../game_engine_interface.js'
 
 import { getSceneLayoutData } from '../game_data/layout.js'
+import { StoryIntroScene } from './story_intro.js'
 
 class MainMenuScene extends Phaser.Scene {
   constructor () {
@@ -72,8 +73,13 @@ class MainMenuScene extends Phaser.Scene {
         audioManager.playEffect('impact', {
           seek: 1
         })
-        this.scene.start('StoryIntroScene', { gameInterface: gameInterface })
+        if (localStorage.getItem('storyIntroSkipped')) {
+          this.scene.start('CharacterSelectScene', { gameInterface: gameInterface });
+        } else {
+          this.scene.start('StoryIntroScene', { gameInterface: gameInterface });
+        }
       },
+
       () => { // On hover
         this.fistIndicator.setY(menuButtonLayout.y + menuButtonLayout.fistIndicatorYOffset)
         this.fistIndicator.setFrame(['rock_ico', 'paper_ico', 'scissors_ico'][++this.menuHighlightIconIndex % 3])

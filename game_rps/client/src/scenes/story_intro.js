@@ -48,6 +48,7 @@ class StoryIntroScene extends Phaser.Scene {
     this.input.on('pointerup', () => {
       this.clickCount++
       if (this.clickCount >= 3) {
+        localStorage.setItem("storyIntroSkipped", true)
         this.loreTween.complete()
       }
     })
@@ -64,6 +65,7 @@ class StoryIntroScene extends Phaser.Scene {
       null,
       0xFFFFFF,
       () => {
+        localStorage.setItem("storyIntroSkipped", true)
         this.loreTween.complete()
       }).setOrigin(
       skipButtonLayout.originX, skipButtonLayout.originY
