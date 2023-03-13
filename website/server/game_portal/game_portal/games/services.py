@@ -26,7 +26,7 @@ def get_player_stats_for_game(product_id, user_id):
         )
         response.raise_for_status()
         return response.json()
-    except (requests.exceptions.RequestException, ValueError)
+    except (requests.exceptions.RequestException, ValueError):
         logging.exception("Error occurred while requesting leaderboard")
         return {"error": "An error occurred while requesting the leaderboard."}
     
